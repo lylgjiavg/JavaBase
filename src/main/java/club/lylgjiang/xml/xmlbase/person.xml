@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 元数据（有关数据的数据）应当存储为属性，而数据本身应当存储为元素。 -->
+<person>ss
+    <!-- This is a comment -->
+    <name>jlc</name>
+    <age>20</age>
+    <sax>man</sax>
+    <schools>
+        <school name="xiaoxue">jiangzhuang</school>
+        <school name="zhongxue">xunmukou</school>
+        <school name="gaozhong">taikang</school>
+    </schools>
+    <other>
+        <![CDATA[
+            if(text contained CDAta){
+                text is Unparsed Character Data
+            }
+        ]]>
+    </other>
+</person>
