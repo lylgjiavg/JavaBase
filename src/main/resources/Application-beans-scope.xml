@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!--
+    默认情况下, Spring 只为每个在 IOC 容器里声明的 Bean 创建唯一一个实例, 整个 IOC 容器范围内都能共享该实例：
+    所有后续的 getBean() 调用和 Bean 引用都将返回这个唯一的 Bean 实例.该作用域被称为 singleton, 它是所有 
+    Bean 的默认作用域.
+    容器初始化时就会创建该Bean的实例
+    -->
+    <bean id="person" class="club.lylgjiang.spring.beans.pojo.Person" scope="singleton">
+        <property name="name" value="jlc"></property>
+        <property name="sax" value="man"></property>
+        <property name="age" value="22"></property>
+        <property name="car">
+            <null></null>
+        </property>
+    </bean>
+    
+    <!--
+    每次调用getBean()都会生成一个新的实例
+    容器初始化时不会创建该Bean的实例,只有在调用getBean()时才会创建该Bean的实例
+    -->
+    <bean id="person-prototype" class="club.lylgjiang.spring.beans.pojo.Person" scope="prototype">
+        <property name="name" value="lx"></property>
+        <property name="sax" value="man"></property>
+        <property name="age" value="20"></property>
+        <property name="car">
+            <null></null>
+        </property>
+    </bean>
+    
+    
+</beans>

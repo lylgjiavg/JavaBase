@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    
+    <!--
+        调用静态工厂方法创建 Bean是将对象创建的过程封装到静态方法中. 
+        要声明通过静态方法创建的 Bean, 需要在 Bean 的 class 属性里指定拥有该工厂的方法的类.
+        factory-method 属性里指定工厂方法的名称. 
+        <constrctor-arg> 元素为该方法传递方法参数.
+    -->
+    <bean id="car" class="club.lylgjiang.spring.beans.factory.StaticFactory" factory-method="newInstance">
+        <constructor-arg name="type" value="大众"></constructor-arg>
+    </bean>
+    
+    
+    
+    <bean id="instanceFactory" class="club.lylgjiang.spring.beans.factory.InstanceFactory">
+    </bean>
+
+    <!--
+        实例工厂方法: 将对象的创建过程封装到另外一个对象实例的方法里. 
+        在 bean 的 factory-bean 属性里指定拥有该工厂方法的 Bean.
+        在 factory-method 属性里指定该工厂方法的名称.
+        使用 construtor-arg 元素为工厂方法传递方法参数.
+    -->
+    <bean id="car2" factory-bean="instanceFactory" factory-method="newInstance">
+        <constructor-arg name="type" value="大唐"></constructor-arg>
+    </bean>
+    
+</beans>

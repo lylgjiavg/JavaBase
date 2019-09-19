@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!--
+        Spring 中有两种类型的 Bean, 一种是普通Bean, 另一种是工厂Bean, 即FactoryBean. 
+        工厂 Bean 跟普通Bean不同, 其返回的对象不是指定类的一个实例, 其返回的是该工厂 Bean 
+        的 getObject 方法所返回的对象.
+
+    
+        通过FactoryBean来配置Bean的实例
+        class:指向FactoryBean的全类名
+        property:指定FactoryBean的属性
+        
+        但实际返回的是FactoryBean的getObject()方法的实例
+        (不管FactoryBean的isSingleton()方法返回的是true或false,FactoryBean的实例都不会在容器初始化就创建,
+        而是在获得该Bean对象时创建)
+    -->
+    <bean id="car" class="club.lylgjiang.spring.beans.factorybean.CarFactoryBean">
+        <property name="brand" value="大众"></property>
+        <property name="company" value="一汽大众"></property>
+    </bean>
+    
+    
+</beans>

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans 
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/context
+       http://www.springframework.org/schema/context/spring-context-4.0.xsd
+">
+
+    <!--
+    配置PropertyPlaceholderConfigurer: BeanFactory 后置处理器.
+    处理器允许用户将 Bean 配置的部分内容外移到属性文件中. 可以在 Bean 配置文件里使用形式为 ${var} 的变量, 
+    PropertyPlaceholderConfigurer 从属性文件里加载属性, 并使用这些属性来替换变量.
+    -->
+    <context:property-placeholder location="db.properties"/>
+    
+    <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
+        <property name="jdbcUrl" value="${db.jdbcUrl}"></property>
+        <property name="driverClass" value="${db.driverClass}"></property>
+        <property name="user" value="root"></property>
+        <property name="password" value="980603"></property>
+    </bean>
+    
+    
+</beans>

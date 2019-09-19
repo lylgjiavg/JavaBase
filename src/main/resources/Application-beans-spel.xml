@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    
+    <!--利用SpEL调用其他方法，还可以链式操作-->
+    <!--通过 T() 调用一个类的静态方法，它将返回一个 Class Object，然后再调用相应的方法或属性-->
+    <bean id="car" class="club.lylgjiang.spring.beans.pojo.Car" 
+          p:name="auDi" 
+          p:price="20000" 
+          p:company="China"
+          p:wheelPerimeter="#{T(java.lang.Math).PI * 80}">
+    </bean>
+    
+    <bean id="person" class="club.lylgjiang.spring.beans.pojo.Person">
+        <property name="name" value="JLC"></property>
+        <property name="age" value="22"></property>
+        <property name="sax" value="man"></property>
+        <!--利用SpEL引用其他对象-->
+        <property name="car" value="#{car}"></property>
+        <!--利用SpEL引用其他对象的属性-->
+        <!--利用SpEL比较运算符： <, >, ==, <=, >=, lt, gt, eq, le, ge-->
+        <property name="socialStratum" value="#{car.price > 300000 ? '金领' : '白领'}"></property>
+    </bean>
+    
+    
+</beans>

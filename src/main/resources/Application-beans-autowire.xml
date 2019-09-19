@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans 
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/util
+       http://www.springframework.org/schema/util/spring-util-4.0.xsd
+">
+
+    <bean id="car" class="club.lylgjiang.spring.beans.pojo.Car">
+        <property name="name" value="奥迪"></property>
+        <property name="company" value="德国"></property>
+        <property name="price" value="300000"></property>
+    </bean>
+    
+    <!--byName(根据名称自动装配): 必须将目标 Bean 的名称和属性名设置的完全相同.-->
+    <bean id="Jiavg-Person" class="club.lylgjiang.spring.beans.pojo.Person" 
+          p:name="jlc" p:age="20" p:sax="man" autowire="byName">
+    </bean>
+    
+    <!--
+    byType(根据类型自动装配): 若 IOC 容器中有多个与目标 Bean 类型一致的 Bean. 
+    在这种情况下, Spring 将无法判定哪个 Bean 最合适该属性, 所以不能执行自动装配.
+    -->
+    <bean id="company" class="club.lylgjiang.spring.beans.pojo.Company" p:name="ali" autowire="byType">
+    </bean>
+    
+</beans>

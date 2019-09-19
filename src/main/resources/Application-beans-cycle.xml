@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    
+    <!--
+    Spring IOC 容器对 Bean 的生命周期进行管理的过程:
+        1.通过构造器或工厂方法创建 Bean 实例
+        2.为 Bean 的属性设置值和对其他 Bean 的引用
+        3.调用 Bean 的初始化方法
+        4.Bean 可以使用了
+        5.当容器关闭时, 调用 Bean 的销毁方法
+        
+    在 Bean 的声明里设置 init-method 和 destroy-method 属性, 为 Bean 指定初始化和销毁方法
+    -->
+    <bean id="car" class="club.lylgjiang.spring.beans.pojo.Car" init-method="init" destroy-method="destroy">
+        <property name="name" value="HongQi"></property>
+        <property name="company" value="China"></property>
+        <property name="price" value="300000"></property>
+        <property name="wheelPerimeter" value="#{T(Math).PI * 80}"></property>
+    </bean>
+    
+    <!--
+        Bean 后置处理器允许在调用<<初始化方法前后>>对 Bean 进行额外的处理.
+        Spring IOC 容器对 Bean 的生命周期进行管理的过程:
+            1.通过构造器或工厂方法创建 Bean 实例
+            2.为 Bean 的属性设置值和对其他 Bean 的引用
+            3.将 Bean 实例传递给 Bean 后置处理器的 postProcessBeforeInitialization 方法
+            4.调用 Bean 的初始化方法
+            5.将 Bean 实例传递给 Bean 后置处理器的 postProcessAfterInitialization方法
+            6.Bean 可以使用了
+            7.当容器关闭时, 调用 Bean 的销毁方法
+    -->
+    <bean class="club.lylgjiang.spring.beans.processor.CarBeanPostProcessor"></bean>
+    
+</beans>

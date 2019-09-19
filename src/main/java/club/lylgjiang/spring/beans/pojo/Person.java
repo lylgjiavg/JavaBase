@@ -20,6 +20,8 @@ public class Person {
     private Double salary;
     // 汽车
     private Car car;
+    // 社会阶级: car.price>300000 ? "金领":"白领"
+    private String socialStratum;
 
     public Person() {
     }
@@ -55,6 +57,9 @@ public class Person {
     public void setCar(Car car) {
         this.car = car;
     }
+    public void setSocialStratum(String socialStratum) {
+        this.socialStratum = socialStratum;
+    }
 
     @Override
     public String toString() {
@@ -64,6 +69,7 @@ public class Person {
                 ", sax='" + sax + '\'' +
                 ", salary=" + salary +
                 ", car=" + car +
+                ", socialStratum='" + socialStratum + '\'' +
                 '}';
     }
 }

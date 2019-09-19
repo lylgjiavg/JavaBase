@@ -14,9 +14,9 @@ public class Utils {
     private Utils() {
     }
 
-    public static ApplicationContext getApplicationContext(){
+    public static ApplicationContext getApplicationContext(String xmlPath){
         ApplicationContext context = 
-                new ClassPathXmlApplicationContext("Application-beans.xml");
+                new ClassPathXmlApplicationContext(xmlPath);
         
         return context;
     }

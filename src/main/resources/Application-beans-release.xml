@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean id="mayun" class="club.lylgjiang.spring.beans.pojo.Person">
+        <property name="name" value="mayun"></property>
+        <property name="age" value="40"></property>
+        <property name="sax" value="max"></property>
+    </bean>
+
+    <bean id="zhangyong" class="club.lylgjiang.spring.beans.pojo.Person">
+        <property name="name" value="zhangyong"></property>
+        <property name="age" value="35"></property>
+        <property name="sax" value="max"></property>
+    </bean>
+    
+    <!--若只想把父 Bean 作为模板, 可以设置 <bean> 的abstract 属性为 true, 这样 Spring 将不会实例化这个 Bean-->
+    <!--并不是 <bean> 元素里的所有属性都会被继承. 比如: autowire, abstract 等.-->
+    <!--
+    可以忽略父 Bean 的 class 属性, 让子 Bean 指定自己的类, 而共享相同的属性配置. 但此时 abstract 必须设为 true
+    TODO:虽然IDEA会有红色警告,但此时能够正常运行(说明IDEA不建议这样做,因为这样做IDEA不能在编译前校验属性是否有相同)
+    -->
+    <!--<bean id="company" p:legalPerson-ref="mayun" abstract="true">
+    </bean> -->
+    
+    <bean id="company" class="club.lylgjiang.spring.beans.pojo.Company"  p:legalPerson-ref="mayun" abstract="true">
+    </bean> 
+    
+    
+    <!--子 Bean 也可以覆盖从父 Bean 继承过来的配置-->
+    <bean id="taobao" parent="company" p:name="TaoBao" p:legalPerson-ref="zhangyong">
+    </bean>
+
+    <!--子 Bean 从父 Bean 中继承配置, 包括 Bean 的属性配置-->
+    <bean id="zhifubao" parent="company" p:name="ZhiFuBao">
+    </bean>
+    
+    
+    <bean id="bike" class="club.lylgjiang.spring.beans.pojo.Car" p:name="dance" p:price="2">
+    </bean>
+    
+    <!--
+    Spring 允许用户通过 depends-on 属性设定 Bean 前置依赖的Bean，
+    前置依赖的 Bean 会在本 Bean 实例化之前创建好.
+    如果前置依赖于多个 Bean，则可以通过逗号，空格的方式配置 Bean 的名称
+    -->
+    <bean id="hellobike" parent="company" p:name="HelloBike" depends-on="bike">
+    </bean>
+    
+</beans>
