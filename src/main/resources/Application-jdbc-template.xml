@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans 
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/context 
+       http://www.springframework.org/schema/context/spring-context-4.0.xsd
+">
+
+    <context:property-placeholder location="db.properties"></context:property-placeholder>
+    
+    <context:component-scan base-package="club.lylgjiang.spring.jdbc"></context:component-scan>
+    
+    <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
+        <property name="driverClass" value="${db.driverClass}"></property>
+        <property name="jdbcUrl" value="${db.jdbcUrl}"></property>
+        <property name="user" value="${db.user}"></property>
+        <property name="password" value="${db.password}"></property>
+    </bean>
+    
+    <!--
+    JdbcTemplate 类被设计成为线程安全的, 所以可以在 IOC 容器中声明它的<<单个实例>>, 
+    并将这个实例注入到所有的 DAO 实例中.
+    -->
+    <bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+        <property name="dataSource" ref="dataSource"></property>
+    </bean>
+    
+    <!--
+    具名参数只在 NamedParameterJdbcTemplate 中得到支持 
+    -->
+    <bean id="namedParameterJdbcTemplate" class="org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate">
+        <constructor-arg name="dataSource" ref="dataSource"></constructor-arg>
+    </bean>
+    
+    
+</beans>

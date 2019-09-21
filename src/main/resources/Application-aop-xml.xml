@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans 
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/context 
+       http://www.springframework.org/schema/context/spring-context-4.0.xsd
+       http://www.springframework.org/schema/aop 
+       http://www.springframework.org/schema/aop/spring-aop-4.0.xsd
+">
+    
+    <!-- 配置 bean -->
+    <bean id="calculate" class="club.lylgjiang.spring.aop.xml.Calculate">
+    </bean>
+
+    <!-- 配置切面的 bean. -->
+    <bean id="loggerAspect" class="club.lylgjiang.spring.aop.xml.LoggerAspect">
+    </bean>
+    
+    <bean id="validationAspect" class="club.lylgjiang.spring.aop.xml.ValidationAspect">
+    </bean>
+
+    <!-- 配置 AOP -->
+    <aop:config>
+        <!-- 配置切点表达式 -->
+        <aop:pointcut id="pointcut" 
+                      expression="execution(* club.lylgjiang.spring.aop.xml.*.* (int, int))"/>
+
+        <!-- 配置切面及通知 -->
+        <aop:aspect id="logger" ref="loggerAspect" order="2">
+            <aop:before method="before" pointcut-ref="pointcut"></aop:before>
+            <aop:after method="after" pointcut-ref="pointcut"></aop:after>
+            <aop:after-returning method="afterReturning" pointcut-ref="pointcut" returning="result"></aop:after-returning>
+            <aop:after-throwing method="afterThrowing" pointcut-ref="pointcut" throwing="exception"></aop:after-throwing>
+            <!--
+            <aop:around method="around" pointcut-ref="pointcut"></aop:around>
+            -->
+        </aop:aspect>
+        
+    </aop:config>
+
+</beans>
