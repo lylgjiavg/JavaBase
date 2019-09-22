@@ -1,0 +1,16 @@
+<!ELEMENT person (name, age, sax, school)>
+
+<!ELEMENT sax (man|woman)>
+<!ELEMENT man EMPTY>
+<!ELEMENT woman EMPTY>
+
+<!ELEMENT name (#PCDATA)>
+<!ELEMENT age (#PCDATA)>
+<!ELEMENT school (#PCDATA)>
+<!--<!ELEMENT copy ANY>-->
+
+<!ATTLIST name firstName CDATA #REQUIRED>
+<!ATTLIST name lastName CDATA #REQUIRED>
+<!--
+    <!ENTITY copyright "jlc@lylg.com">
+-->

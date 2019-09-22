@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE person SYSTEM "person.dtd">
+<person>
+    <name firstName="jiang" lastName="licheng">JLC</name>
+    <age>22</age>
+    <sax>
+        <man/>
+    </sax>
+    <school>lylg</school>
+    <!--<copy>&copyright;</copy>-->
+</person>
