@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+        targetNamespace="http://www.lylgjiang.club" 
+        xmlns="http://www.lylgjiang.club">
+    
+    <xs:element name="person">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="name">
+                    <xs:complexType>
+                        <xs:attribute name="firstName" type="xs:string"></xs:attribute>
+                        <xs:attribute name="lastName" type="xs:string"></xs:attribute>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="age" type="xs:int"></xs:element>
+                <xs:element name="sax" type="xs:string"></xs:element>
+                <xs:element name="school" type="xs:string"></xs:element>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+</xs:schema>
