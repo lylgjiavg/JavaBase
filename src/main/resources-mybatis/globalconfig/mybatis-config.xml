@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+
+    <!--
+    如果属性在不只一个地方进行了配置，那么 MyBatis 将按照下面的顺序来加载：
+        – 在 properties 元素体内指定的属性首先被读取。
+        – 然后根据 properties 元素中的 resource 属性读取(类路径下)属性文件或根
+           据 url 属性指定的路径读取(网络路径或磁盘路径)属性文件，并覆盖已读取的同名属性。
+        – 最后读取作为方法参数传递的属性，并覆盖已读取的同名属性。
+    -->
+    <properties resource="globalconfig/db.properties">
+        <property name="name" value="jlc"/>
+    </properties>
+    
+    <!--
+    settings:是 MyBatis 中极为重要的调整设置，它们会改变 MyBatis 的运行时行为。
+    -->
+    <settings>
+        <!--
+        是否开启自动驼峰命名规则（camel case）映射，即从经典数据库列名 A_COLUMN 
+        到经典 Java 属性名 aColumn 的类似映射。
+        -->
+        <setting name="mapUnderscoreToCamelCase" value="true"/>
+        <!--
+        指定 MyBatis 所用日志的具体实现，未指定时将自动查找。
+        SLF4J | LOG4J | LOG4J2 | JDK_LOGGING | COMMONS_LOGGING | STDOUT_LOGGING | NO_LOGGING
+        -->
+        <setting name="logImpl" value="LOG4J"/>
+    </settings>
+
+    <!--
+    类型别名是为 Java 类型设置一个短的名字，可以方便我们引用某个类。
+    注意:别名不区分大小写
+    -->
+    <typeAliases>
+        <!--
+        typeAlias:为某一个具体的类起一个别名
+            type:类的全路径
+            alias:别名,不写默认是类名小写
+        -->
+        <!--<typeAlias type="club.lylgjiang.mybatis.pojo.Employee" alias="emp"></typeAlias>-->
+        <!--
+        类很多的情况下，可以批量设置别名这个包下的每一个类创建一个默认的别名，就是简单类名小写。
+        常见的 Java 类型内建的相应的类型别名。它们都是不区分大小写的，注意对基本类型名称重复采取的特殊命名风格。
+        Mybatis为常见的 Java 类型内建的相应的类型别名,注意起别名时别与这些相冲突
+            name:指定为包,给该包下及其子包下的所有类起默认别名(简单类名小写)
+            如果该包下(与其子包)有别名冲突,则会报错,使用@Alias注解重命名别名
+        -->
+        <package name="club.lylgjiang.mybatis.pojo"/>
+    </typeAliases>
+    
+    <!-- 
+    无论是 MyBatis 在预处理语句（PreparedStatement）中设置一个参数时，还是从结果集中取出一个值时， 都会
+    用类型处理器将获取的值以合适的方式转换成 Java 类型。
+     我们可以重写类型处理器或创建自己的类型处理器来处理不支持的或非标准的类型。
+    • 步骤：
+    • 1）、实现org.apache.ibatis.type.TypeHandler接口或者继承org.apache.ibatis.type.BaseTypeHandler
+    • 2）、指定其映射某个JDBC类型（可选操作）
+    • 3）、在mybatis全局配置文件中注册
+    -->
+    <!--
+    <typeHandlers>
+        <typeHandler handler="" javaType="" jdbcType=""></typeHandler>
+    </typeHandlers>
+    -->
+    
+    <!--
+     插件是MyBatis提供的一个非常强大的机制，我们可以通过插件来修改MyBatis的一些核心行为。插
+    件通过动态代理机制，可以介入四大对象的任何一个方法的执行。后面会有专门的章节我们来介绍
+    mybatis运行原理以及插件
+    •  Executor (update, query, flushStatements, commit, rollback, getTransaction, close, isClosed)
+    •  ParameterHandler (getParameterObject, setParameters)
+    •  ResultSetHandler (handleResultSets, handleOutputParameters)
+    •  StatementHandler (prepare, parameterize, batch, update, query)
+    -->
+    <!--
+    <plugins>
+        <plugin interceptor=""></plugin>
+    </plugins>
+    -->
+    
+    <!--
+    MyBatis可以配置多种环境，比如开发、测试和生产环境需要有不同的配置。
+    • 每种环境使用一个environment标签进行配置并指定唯一标识符
+    • 可以通过environments标签中的default属性指定一个环境的标识符来快速的切换环境
+    -->
+    <environments default="development">
+        <!--
+        environment- - 指定具体环境
+        • id：指定当前环境的唯一标识
+        • transactionManager、和dataSource都必须有
+        -->
+        <environment id="development">
+            <!--
+            transactionManager : type： JDBC | MANAGED | 自定义
+            – JDBC：使用了 JDBC 的提交和回滚设置，依赖于从数据源得到的连接来管理事务范围。
+            JdbcTransactionFactory
+            – MANAGED：不提交或回滚一个连接、让容器来管理事务的整个生命周期（比如 JEE 应用服务器的上下文）。
+            ManagedTransactionFactory
+            – 自定义：实现TransactionFactory接口，type=全类名/别名
+            -->
+            <transactionManager type="JDBC"/>
+            <!--
+             dataSource type： UNPOOLED | POOLED | JNDI | 自定义
+            – UNPOOLED：不使用连接池，UnpooledDataSourceFactory
+            – POOLED：使用连接池， PooledDataSourceFactory
+            – JNDI： 在EJB 或应用服务器这类容器中查找指定的数据源
+            – 自定义：实现DataSourceFactory接口，定义数据源的获取方式。
+            • 实际开发中我们使用Spring管理数据源，并进行事务控制的配置来覆盖上述配置
+            -->
+            <dataSource type="POOLED">
+                <property name="driver" value="${jdbc.driverClass}"/>
+                <property name="url" value="${jdbc.jdbcUrl}"/>
+                <property name="username" value="${jdbc.user}"/>
+                <property name="password" value="${jdbc.password}"/>
+            </dataSource>
+        </environment>
+
+        <!--
+        <environment id="test">
+            <transactionManager type="JDBC"/>
+            <dataSource type="POOLED">
+                <property name="driver" value="${oracle.driverClass}"/>
+                <property name="url" value="${oracle.jdbcUrl}"/>
+                <property name="username" value="${oracle.user}"/>
+                <property name="password" value="${oracle.password}"/>
+            </dataSource>
+        </environment>
+        -->
+    </environments>
+    
+    <!--
+    databaseIdProvider环境:
+    Type： DB_VENDOR
+    – 使用MyBatis提供的VendorDatabaseIdProvider解析数据库厂商标识。也可以实现DatabaseIdProvider接口来自定义。
+    • Property-name：数据库厂商标识
+    • Property-value：为标识起一个别名，方便SQL语句使用databaseId属性引用
+    
+    DB_VENDOR
+    – 会通过 ) DatabaseMetaData#getDatabaseProductName() 返回的字符串进行设置。由于通常情况下这个字符串
+    都非常长而且相同产品的不同版本会返回不同的值，所以最好通过设置属性别名来使其变短
+    • MyBatis匹配规则如下：
+    – 1、如果没有配置databaseIdProvider标签，那么databaseId=null
+    – 2、如果配置了databaseIdProvider标签，使用标签配置的name去匹配数据库信息，匹配上设置databaseId=配置
+    指定的值，否则依旧为null
+    – 3、如果databaseId不为null，他只会找到配置databaseId的sql语句
+    – 4、MyBatis 会加载不带 databaseId 属性和带有匹配当前数据库databaseId 属性的所有语句。如果同时找到带
+    有 databaseId 和不带databaseId 的相同语句，则后者会被舍弃。
+    -->
+    <databaseIdProvider type="DB_VENDOR">
+        <property name="MySQL" value="mysql"/>
+        <property name="Oracle" value="oracle"/>
+    </databaseIdProvider>
+    
+    
+    <mappers>
+        <!--注册基于接口注解开发的Mapper-->
+        <!--<mapper class=""></mapper>-->
+        
+        <!--mapper逐个注册SQL映射文件
+            resource 属性读取(类路径下)属性文件或根据 url 属性指定的路径读取(网络路径或磁盘路径)属性文件
+        -->
+        <mapper resource="globalconfig/Employee-Mapper.xml"/>
+        <!--或者使用批量注册：
+            • 这种方式要求SQL映射文件名必须和接口名相同并且在同一目录下
+        -->
+        <package name="club.lylgjiang.mybatis.globalconfig"/>
+    </mappers>
+    
+</configuration>

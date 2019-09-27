@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+
+    <properties resource="db.properties"></properties>
+    
+    <settings>
+        <!--指定 MyBatis 应如何自动映射列到字段或属性。 NONE 表示取消自动映射；
+        PARTIAL 只会自动映射没有定义嵌套结果集映射的结果集。 (默认)
+        FULL 会自动映射任意复杂的结果集（无论是否嵌套）。-->
+        <setting name="autoMappingBehavior" value="PARTIAL"/>
+        
+        <!--延迟加载的全局开关。当开启时，所有关联对象都会延迟加载。 
+        特定关联关系中可通过设置 fetchType 属性来覆盖该项的开关状态。-->
+        <setting name="lazyLoadingEnabled" value="true"/>
+        
+        <!--当开启时，任何方法的调用都会加载该对象的所有属性。 
+        否则，每个属性会按需加载（参考 lazyLoadTriggerMethods)。-->
+        <setting name="aggressiveLazyLoading" value="false"/>
+        
+        <!--	是否开启自动驼峰命名规则（camel case）映射，
+        即从经典数据库列名 A_COLUMN 到经典 Java 属性名 aColumn 的类似映射。-->
+        <!--<setting name="mapUnderscoreToCamelCase" value="true"/>-->
+    </settings>
+    
+    <typeAliases>
+        <package name="club.lylgjiang.mybatis.pojo"/>
+    </typeAliases>
+    
+    <environments default="develop_mysql">
+        <environment id="develop_mysql">
+            <transactionManager type="JDBC"></transactionManager>
+            <dataSource type="POOLED">
+                <property name="driver" value="${jdbc.driverClass}"/>
+                <property name="url" value="${jdbc.jdbcUrl}"/>
+                <property name="username" value="${jdbc.user}"/>
+                <property name="password" value="${jdbc.password}"/>
+            </dataSource>
+        </environment>
+    </environments>
+    
+    <databaseIdProvider type="DB_VENDOR">
+        <property name="MySQL" value="mysql"/>
+        <property name="Oracle" value="oracle"/>
+    </databaseIdProvider>
+    
+    <mappers>
+        <mapper resource="selectparam/employee-mapper.xml"></mapper>
+        <mapper resource="selectparam/department-mapper.xml"></mapper>
+    </mappers>
+
+</configuration>

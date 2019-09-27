@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="club.lylgjiang.mybatis.paramtransmit.EmployeeMapper">
+
+    <!--public Employee selectById(Integer id);-->
+    <select id="selectById" databaseId="mysql" resultType="employee" >
+        select * from tb1_employee where id=#{idabc}
+    </select>
+    
+    <!--public Employee selectByIdAndName(Integer id, String lastName);-->
+    <select id="selectByIdAndName" resultType="employee">
+        select * from tb1_employee where id=#{0} and last_name=#{1}
+    </select>
+    
+    <!--public Employee selectByIdAndNameAnno(@Param("id") Integer id,@Param("lastName") String lastName);-->
+    <select id="selectByIdAndNameAnno" resultType="employee">
+        select * from tb1_employee where id=#{id} and last_name=#{lastName}
+    </select>
+
+    <!--public Employee selectByIdAndNameMap(Map map);-->
+    <select id="selectByIdAndNameMap" resultType="employee">
+        select * from tb1_employee where id=#{id} and last_name=#{lastName}
+    </select>
+
+    <!--public Employee selectByIdAndNameSetting(Integer id, String lastName);-->
+    <select id="selectByIdAndNameSetting" resultType="employee">
+        select * from tb1_employee where id=#{param1} and last_name=#{param2}
+    </select>
+
+    <!--public Employee selectByIdAndNameSetTB(Integer id, String lastName, String tableName);-->
+    <select id="selectByIdAndNameSetTB" resultType="employee">
+        select * from ${param3} where id=#{param1} and last_name=#{param2}
+    </select>
+
+
+</mapper>
