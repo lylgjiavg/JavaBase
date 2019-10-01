@@ -73,4 +73,24 @@
         select * from tb1_employee where id=#{id}
     </select>
     
+    
+    <resultMap id="empDiscriminator" type="club.lylgjiang.mybatis.pojo.Employee">
+        <id column="id" property="id"></id>
+        <result column="last_name" property="lastName"></result>
+        <result column="gender" property="gender"></result>
+        <result column="email" property="email"></result>
+        <discriminator javaType="string" column="gender">
+            <case value="0" resultType="club.lylgjiang.mybatis.pojo.Employee">
+                <result column="last_name" property="gender"></result>
+            </case>
+            <case value="1" resultType="club.lylgjiang.mybatis.pojo.Employee">
+                <result column="email" property="gender"></result>
+            </case>
+        </discriminator>
+    </resultMap>
+    <!--public Employee getEmpAndDeptByIdDiscriminator(Integer id);-->
+    <select id="getEmpAndDeptByIdDiscriminator" resultMap="empDiscriminator" databaseId="mysql">
+        select * from tb1_employee where id=#{id}
+    </select>
+    
 </mapper>

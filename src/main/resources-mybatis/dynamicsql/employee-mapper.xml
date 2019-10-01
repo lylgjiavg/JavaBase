@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="club.lylgjiang.mybatis.dynamicsql.EmployeeMapper">
+    
+    <!--public Employee getEmpByConductIf(Integer id);-->
+    <select id="getEmpByConductIf" resultType="club.lylgjiang.mybatis.pojo.Employee" databaseId="mysql">
+        select * from tb1_employee where 1=1
+        <if test="id != null">
+            and id=#{id}
+        </if>
+        <if test="lastName != null">
+            and last_name like #{lastName}
+        </if>
+        <if test="gender != null">
+            and gender=#{gender}
+        </if>
+        <if test="email != null">
+            and email=#{email}
+        </if>
+    </select>
+    
+    
+    <!--public List<Employee> getEmpByConductWhere(Employee employee);-->
+    <select id="getEmpByConductWhere" resultType="club.lylgjiang.mybatis.pojo.Employee" databaseId="mysql">
+        select * from tb1_employee
+        <where>
+            <if test="id != null">
+                and id=#{id}
+            </if>
+            <if test="lastName != null">
+                and last_name like #{lastName}
+            </if>
+            <if test="gender != null">
+                and gender=#{gender}
+            </if>
+            <if test="email != null">
+                and email=#{email}
+            </if>
+        </where>
+    </select>
+    
+    
+    <!--public List<Employee> getEmpByConductChoose(Employee employee);-->
+    <select id="getEmpByConductChoose" resultType="club.lylgjiang.mybatis.pojo.Employee" databaseId="mysql">
+        <choose>
+            <when test="id != null">
+                select * from tb1_employee where id=#{id}
+            </when>
+            <when test="lastName != null">
+                select * from tb1_employee where last_name like #{lastName}
+            </when>
+            <otherwise>
+                select * from tb1_employee where gender='0'
+            </otherwise>
+        </choose>
+    </select>
+    
+    
+    <!--public List<Employee> getEmpByConductTrim(Employee employee);-->
+    <select id="getEmpByConductTrim" resultType="club.lylgjiang.mybatis.pojo.Employee" databaseId="mysql">
+        select * from tb1_employee
+        <trim prefix="where" suffixOverrides="and">
+            <if test="id != null">
+                id=#{id} and
+            </if>
+            <if test="lastName != null">
+                last_name = #{lastName} and
+            </if>
+            <if test="gender != null">
+                gender=#{gender} and
+            </if>
+            <if test="email != null">
+                email=#{email} and
+            </if>
+        </trim>
+    </select>
+    
+    
+    <!--public long insertEmpConductForeach(List<Employee> employees);-->
+    <insert id="insertEmpConductForeach" parameterType="club.lylgjiang.mybatis.pojo.Employee" 
+            databaseId="mysql" keyProperty="id" useGeneratedKeys="true" keyColumn="id">
+        INSERT INTO tb1_employee(last_name,gender,email) VALUES
+        <foreach collection="collection" item="emp" open="(" close=")" separator=",">
+            #{emp.lastName},#{emp.gender},#{emp.email}              
+        </foreach>
+    </insert>
+
+    
+    <!--public long updateEmpConductSet(List<Employee> employees);-->
+    <update id="updateEmpConductSet" parameterType="club.lylgjiang.mybatis.pojo.Employee" databaseId="mysql">
+        update tb1_employee
+        <set>
+            <if test="lastName != null">
+                last_name = #{lastName},
+            </if>
+            <if test="gender != null">
+                gender=#{gender},
+            </if>
+            <if test="email != null">
+                email=#{email},
+            </if>
+        </set>
+        where id=#{id}
+    </update>
+
+
+    <!--public List<Employee> getEmpByLikeNameConductBind(String lastName);-->
+    <select id="getEmpByLikeNameConductBind" resultType="club.lylgjiang.mybatis.pojo.Employee" databaseId="mysql">
+        <bind name="lastName" value="'%' + lastName + '%'"/>
+        select * from tb1_employee
+        <where>
+            last_name like #{lastName}
+        </where>
+    </select>
+
+    
+    <!--public Employee getEmpByConductInnerParam(Integer id);-->
+    <select id="getEmpByConductInnerParam" resultType="club.lylgjiang.mybatis.pojo.Employee">
+        <if test="_databaseId == 'mysql'">
+            select * from tb1_employee where id=#{id}
+        </if>
+    </select>
+
+</mapper>

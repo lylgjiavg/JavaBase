@@ -20,4 +20,6 @@ public interface EmployeeMapper {
     
     public Employee getEmpAndDeptByIdPlusStep(Integer id);
     
+    public Employee getEmpAndDeptByIdDiscriminator(Integer id);
+    
 }

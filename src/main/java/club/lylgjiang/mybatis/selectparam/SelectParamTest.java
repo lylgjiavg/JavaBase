@@ -123,5 +123,19 @@ public class SelectParamTest {
 
     }
     
+    @Test
+    public void test08() throws IOException {
+
+        InputStream inputStream = Resources.getResourceAsStream("selectparam/mybatis-config.xml");
+
+        SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
+        SqlSession sqlSession = sqlSessionFactory.openSession();
+
+        EmployeeMapper mapper = sqlSession.getMapper(EmployeeMapper.class);
+        Employee employee = mapper.getEmpAndDeptByIdDiscriminator(1);
+        System.out.println(employee);
+
+    }
+    
     
 }
